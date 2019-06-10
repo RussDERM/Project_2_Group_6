@@ -3,9 +3,9 @@ if (process.env.JAWSDB_URL) {
 } else {
   connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: ''
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: 'tweetstache_db'
   });
 };
 
