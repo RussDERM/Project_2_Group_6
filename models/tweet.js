@@ -1,16 +1,26 @@
 module.exports = function(sequelize, DataTypes) {
   var Tweet = sequelize.define("Tweet", {
-    title: {
+    tweetId: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [1]
       }
     },
-    body: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      len: [1]
+
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+
+    UserId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     }
   });
 
