@@ -22,8 +22,10 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
+// require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+require("./routes/tweet-api-routes")(app);
+require("./routes/user-api-routes")(app);
 
 var syncOptions = { force: false };
 
