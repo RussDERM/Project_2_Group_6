@@ -17,5 +17,5 @@ router.get("/google", (req, res) => {
     res.send("logging in with google");
 });
 
-//export the route to be imported in the index.js
+//export the route to be imported in the server.js
 module.exports = router;
