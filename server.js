@@ -1,7 +1,6 @@
 require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
-var authRoutes = require("./routes/auth-routes");
 
 var db = require("./models");
 
@@ -27,9 +26,6 @@ app.set("view engine", "handlebars");
 require("./routes/htmlRoutes")(app);
 require("./routes/tweet-api-routes")(app);
 require("./routes/user-api-routes")(app);
-
-//routes for authentication
-app.use("/auth", authRoutes);
 
 var syncOptions = { force: false };
 
