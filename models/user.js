@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    Id: {
+    id: {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
@@ -34,34 +34,36 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-
-    last_login: {
-      type: DataTypes.DATE
-    },
-
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-
-    status: {
-      type: DataTypes.ENUM("active", "inactive"),
-      defaultValue: "active"
     }
+
+    // last_login: {
+    //   type: DataTypes.DATE
+    // },
+
+    // createdAt: {
+    //   type: DataTypes.DATE,
+    //   defaultValue: DataTypes.NOW
+    // },
+
+    // updatedAt: {
+    //   type: DataTypes.DATE,
+    //   defaultValue: DataTypes.NOW
+    // },
+
+    // status: {
+    //   type: DataTypes.ENUM("active", "inactive"),
+    //   defaultValue: "active"
+    // }
   });
 
+  
   User.associate = function(models) {
-    // Associating User with Tweets
-    // When an User is deleted, also delete any associated Tweets
-    User.hasMany(models.Tweet, {
-      onDelete: "cascade"
-    });
+    User.hasMany(models.Tweet);
+  //   // Associating User with Tweet
+  //   // When an User is deleted, also delete any associated Tweets
+  //   User.hasMany(models.Tweet, {
+  //     onDelete: "cascade"
+  //   });
   };
 
   return User;
