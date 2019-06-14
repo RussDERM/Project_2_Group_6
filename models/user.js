@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    id: {
+    Id: {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
@@ -38,6 +38,16 @@ module.exports = function(sequelize, DataTypes) {
 
     last_login: {
       type: DataTypes.DATE
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
 
     status: {
