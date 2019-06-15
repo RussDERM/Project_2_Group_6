@@ -3,13 +3,14 @@ var passport = require("passport");
 
 // authentication login
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login", {user: req.user});
 });
 
 //authentication logout
 router.get("/logout", (req, res) => {
     //handle with passport
-    res.send("logging out");
+    res.logout();
+    res.redirect("/");
 });
 
 //authentication with google
