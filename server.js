@@ -35,6 +35,10 @@ require("./routes/user-api-routes")(app);
 
 //route for auth
 app.use("/auth", authRoutes);
+//home route user to determine in views which user login/ out button needs to display
+app.get("/",(req, res) =>{
+  res.render("index",{user:req.user});
+});
 // create cookie session
 app.use(
   cookieSession({
