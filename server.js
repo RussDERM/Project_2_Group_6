@@ -6,7 +6,7 @@ var db = require("./models");
 
 var authRoutes = require("./routes/auth-routes");
 var passportSetup = require("./config/passport-setup");
-var keys = require("./config/keys");
+var keys = require("./config/keys_google");
 var cookieSession = require("cookie-session");
 var passport = require("passport");
 
