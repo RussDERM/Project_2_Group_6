@@ -44,14 +44,13 @@ var test = "";
 var test1 = "";
 var html = "";
 var T = new Twit({
-  consumer_key: 'q0FiTHT26bJxIjldXF8g2EDVw',
-  consumer_secret: 'WEBBW8erGtCBKA1gCDp8YCNpqTBLSkx3zwek0M0gdSE6gs3dYQ',
-  access_token: '1136480334088814592-KHSFeLe6UTjEuavcNvrtZHTCZBEMfM',
-  access_token_secret: 'zSpivL6RbF9pjCOisQqB5klBpB8fLC1S5iu27Sai1m1mv',
-  timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
-  strictSSL: true,     // optional - requires SSL certificates to be valid.
-})
-
+  consumer_key: process.env.API_CONSUMER_KEY,
+  consumer_secret: process.env.API_CONSUMER_SECRET,
+  access_token: process.env.API_ACCESS_TOKEN,
+  access_token_secret: process.env.API_ACCESS_TOKEN_SECRET,
+  timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+  strictSSL: true // optional - requires SSL certificates to be valid.
+});
 
 // This function will query Twitter and return 50 trending topics (just the name of those topics)
 function trendSearch() {
@@ -62,7 +61,7 @@ function trendSearch() {
     for (let j = 0; j < numOfTrending; j++) {
       topicSearch(trendTopics[j]);
     }
-  })
+  });
 }
 
 // This function will input a single topic search and output the Tweet ID associated with that specific topic

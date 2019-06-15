@@ -2,21 +2,33 @@ var db = require("../models");
 
 module.exports = function(app) {
   app.get("/api/users", function(req, res) {
-    // Here we add an "include" property to our options in our findAll query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Tweet
-    db.User.findAll({
-      include: [db.Tweet]
-    }).then(function(dbUser) {
+    db.User.findAll({}).then(function(dbUsers) {
+      res.json(dbUsers);
+    });
+  });
+
+  // Create a new user
+  app.post("/api/users", function(req, res) {
+    db.User.create(req.body).then(function(dbUser) {
       res.json(dbUser);
     });
   });
+  // app.get("/api/users", function(req, res) {
+  //   // Here we add an "include" property to our options in our findAll query
+  //   // We set the value to an array of the models we want to include in a left outer join
+  //   // In this case, just db.Tweet
+  //   db.User.findAll({
+  //     include: [db.Tweet]
+  //   }).then(function(dbUser) {
+  //     res.json(dbUser);
+  //   });
+  // });
 
   app.get("/api/users/:id", function(req, res) {
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Tweet
-    db.User.findOne({
+    db.Users.findOne({
       where: {
         id: req.params.id
       },
@@ -26,14 +38,14 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/users", function(req, res) {
-    db.User.create(req.body).then(function(dbUser) {
-      res.json(dbUser);
-    });
-  });
+  // app.post("/api/users", function(req, res) {
+  //   db.User.create(req.body).then(function(dbUser) {
+  //     res.json(dbUser);
+  //   });
+  // });
 
   app.delete("/api/users/:id", function(req, res) {
-    db.User.destroy({
+    db.Users.destroy({
       where: {
         id: req.params.id
       }
