@@ -21,24 +21,16 @@ describe("GET /api/users", function() {
     // Add some examples to the db to test with
     db.User.bulkCreate([
       {
-        firstname: "Jim",
-        lastname: "Bob",
         username: "jim27",
-        about: "I am a farmer who tweets",
-        email: "jimmyboy@yahoo.com",
-        password: "jBob21!"
+        googleId: "String"
         // last_login: "2019-06-10 04:26:48",
         // createdAt: "2019-06-09 04:26:48",
         // updatedAt: "2019-06-10 04:26:48",
         // status: "active"
       },
       {
-        firstname: "test",
-        lastname: "two",
         username: "test123",
-        about: "testing testing 123",
-        email: "test123@yahoo.com",
-        password: "testPW"
+        googleId: "String"
         // last_login: "2019-06-10 04:26:48",
         // createdAt: "2019-06-09 04:26:48",
         // updatedAt: "2019-06-10 04:26:48",
@@ -66,12 +58,8 @@ describe("GET /api/users", function() {
         expect(responseBody[0])
           .to.be.an("object")
           .that.includes({
-            firstname: "Jim",
-            lastname: "Bob",
             username: "jim27",
-            about: "I am a farmer who tweets",
-            email: "jimmyboy@yahoo.com",
-            password: "jBob21!"
+            googleId: "String"
             // last_login: "2019-06-10 04:26:48",
             // createdAt: "2019-06-09 04:26:48",
             // updatedAt: "2019-06-10 04:26:48",
@@ -81,12 +69,8 @@ describe("GET /api/users", function() {
         expect(responseBody[1])
           .to.be.an("object")
           .that.includes({
-            firstname: "test",
-            lastname: "two",
             username: "test123",
-            about: "testing testing 123",
-            email: "test123@yahoo.com",
-            password: "testPW"
+            googleId: "String"
             // last_login: "2019-06-10 04:26:48",
             // createdAt: "2019-06-09 04:26:48",
             // updatedAt: "2019-06-10 04:26:48",
