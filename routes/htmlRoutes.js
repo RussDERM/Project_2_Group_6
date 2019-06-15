@@ -13,15 +13,13 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:tweetId", function(req, res) {
-    db.tweet
-      .findOne({ where: { tweetId: req.params.tweetId } })
-      .then(function(dbTweets) {
-        console.log(dbTweets);
-        // res.render("example", {
-        //   example: dbTweets
-        // });
+  app.get("/tweet/:id", function(req, res) {
+    db.Tweet.findOne({ where: { id: req.params.id } }).then(function(dbTweet) {
+      console.log(dbTweet);
+      res.render("example", {
+        tweet: dbTweet
       });
+    });
   });
 
   // Render 404 page for any unmatched routes

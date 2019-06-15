@@ -1,15 +1,30 @@
-const Sequelize = require ("sequelize");
-const Schema = Sequelize.Schema;
+module.exports = function(sequelize, DataTypes) {
+  var User = sequelize.define("User", {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
 
+    username: {
+      type: DataTypes.STRING,
+      notEmpty: true
+    },
 
-// create schema for user model defining how we want our user record to look
-const userSchema = new Schema({
-    //properties we want user to have
-    username: "String",
-    googleId: "String"
-});
+    googleId: {
+      type: DataTypes.STRING,
+      notEmpty: true
+    }
+  });
 
-const User = Sequelize.Model("user", userSchema);
+  User.associate = function(models) {
+    User.hasMany(models.Tweet);
+    //   // Associating User with Tweet
+    //   // When an User is deleted, also delete any associated Tweets
+    //   User.hasMany(models.Tweet, {
+    //     onDelete: "cascade"
+    //   });
+  };
 
-//export for user in another file
-module.exports= User;
+  return User;
+};

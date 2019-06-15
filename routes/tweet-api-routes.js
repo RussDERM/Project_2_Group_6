@@ -12,7 +12,7 @@ module.exports = function(app) {
     });
   });
 
-  // Create a new tweet
+  // Save a new tweet
   app.post("/api/tweets", function(req, res) {
     db.Tweet.create(req.body).then(function(dbTweet) {
       res.json(dbTweet);

@@ -1,4 +1,4 @@
-require("./user.test");
+require("./user-models.test");
 var chai = require("chai");
 var chaiHttp = require("chai-http");
 var server = require("../server");
@@ -21,10 +21,10 @@ describe("GET /api/tweets", function() {
   it("should find all tweets", function(done) {
     // Add some examples to the db to test with
     db.Tweet.bulkCreate([
-      { tweetId: "7543876237543" },
-      { tweetId: "6743735985344" },
-      { tweetId: "2333734546341" },
-      { tweetId: "1111111111111" }
+      { tweetId: "7543876237543", UserId: 1 },
+      { tweetId: "6743735985344", UserId: 2 },
+      { tweetId: "2333734546341", UserId: 1 },
+      { tweetId: "1111111111111", UserId: 2 }
       // { text: "Second Example", description: "Second Description" }
     ]).then(function() {
       // Request the route that returns all examples

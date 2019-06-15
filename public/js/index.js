@@ -33,15 +33,16 @@ var API = {
 // refreshExamples gets new examples from the db and repopulates the list
 var refreshExamples = function() {
   API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
+    console.log(data);
+    var $tweets = data.map(function(tweet) {
       var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/tweets/" + example.id);
+        .text(tweet.text)
+        .attr("href", "/tweet/" + tweet.id);
 
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": tweet.id
         })
         .append($a);
 
@@ -55,7 +56,7 @@ var refreshExamples = function() {
     });
 
     $exampleList.empty();
-    $exampleList.append($examples);
+    $exampleList.append($tweets);
   });
 };
 
