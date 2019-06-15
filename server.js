@@ -27,18 +27,7 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
-// require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
-require("./routes/tweet-api-routes")(app);
-require("./routes/user-api-routes")(app);
-
 //route for auth
-app.use("/auth", authRoutes);
-//home route user to determine in views which user login/ out button needs to display
-app.get("/",(req, res) =>{
-  res.render("index",{user:req.user});
-});
 // create cookie session
 app.use(
   cookieSession({
@@ -46,15 +35,26 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
     keys: [keys.session.Cookiekey]
   })
-);
-
-//initialize passport
-app.use(passport.initialize);
-//use session to utilize session cookies
-app.use(passport.session);
-var syncOptions = { force: false };
-
-// If running a test, set syncOptions.force to true
+  );
+  
+  //initialize passport
+  app.use(passport.initialize());
+  //use session to utilize session cookies
+  app.use(passport.session());
+  var syncOptions = { force: false };
+  // Routes
+  // require("./routes/apiRoutes")(app);
+  app.use("/auth", authRoutes);
+  //home route user to determine in views which user login/ out button needs to display
+  app.get("/",(req, res) =>{
+    res.render("index",{user:req.user});
+  });
+  require("./routes/htmlRoutes")(app);
+  require("./routes/tweet-api-routes")(app);
+  require("./routes/user-api-routes")(app);
+  
+  
+  // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
