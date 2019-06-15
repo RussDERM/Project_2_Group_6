@@ -3,6 +3,21 @@ const GoogleStrategy = require("passport-google-oauth20");
 const keys = require("./keys");
 const User = require("../models/user-models");
 
+//serialize user cookie set up
+passport.serializeUser((user,done) =>{
+    //use the user id created in sequelize table to display if user is already logged in 
+    //stores this user in a cookie
+    done(err, user.id)
+});
+
+//deserialize take in an id to retrieve from cookie and see what user the id belongs to
+passport.deserializeUser((id,done) =>{
+    User.findById(id).then((user) =>{
+        done(err, user.id);
+    }); 
+   
+});
+
 //set up passport to use a google strategy
 passport.use(new GoogleStrategy({
     //options for the google strategy
@@ -21,6 +36,7 @@ passport.use(new GoogleStrategy({
         if (currentUser) {
             //already have a user inside user collection with matching profile id returned from google
             console.log("user is" + currentUser);
+            done(err, currentUser);
         } else {
             // if not, create user in our db
 
@@ -30,6 +46,8 @@ passport.use(new GoogleStrategy({
                 gooogleId: profile.id
             }).save().then((newUser) => {
                 console.log("new user created" + newUser);
+                done(err, newUser);
+                
             });
         };
     });
