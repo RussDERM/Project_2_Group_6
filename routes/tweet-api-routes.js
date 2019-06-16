@@ -4,17 +4,16 @@ var db = require("../models");
 // Routes
 // =============================================================
 module.exports = function(app) {
-  // Still need to set up public js files to handle user signup/login data to link User ID here and replace author_id.
-  // GET route for getting all of the posts
+  // GET route for getting all of the posts for the user
   app.get("/api/tweets", function(req, res) {
-    db.Tweet.findAll({}).then(function(dbTweets) {
+    db.Tweet.findAll({ include: [db.User] }).then(function(dbTweets) {
       res.json(dbTweets);
     });
   });
 
   // Save a new tweet
   app.post("/api/tweets", function(req, res) {
-    db.Tweet.create(req.body).then(function(dbTweet) {
+    db.Tweet.create(req.body, { include: [db.User] }).then(function(dbTweet) {
       res.json(dbTweet);
     });
   });
@@ -46,13 +45,6 @@ module.exports = function(app) {
   //     },
   //     include: [db.User]
   //   }).then(function(dbTweet) {
-  //     res.json(dbTweet);
-  //   });
-  // });
-
-  // POST route for saving a new post
-  // app.post("/api/tweets", function(req, res) {
-  //   db.Tweet.create(req.body).then(function(dbTweet) {
   //     res.json(dbTweet);
   //   });
   // });
