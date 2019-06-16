@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
     id: {
+      type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
+      primaryKey: true
     },
 
     username: {
@@ -18,12 +18,10 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   User.associate = function(models) {
-    User.hasMany(models.Tweet);
-    //   // Associating User with Tweet
-    //   // When an User is deleted, also delete any associated Tweets
-    //   User.hasMany(models.Tweet, {
-    //     onDelete: "cascade"
-    //   });
+    User.hasMany(models.Tweet, {
+      // foreignKey: "UserId",
+      onDelete: "CASCADE"
+    });
   };
 
   return User;

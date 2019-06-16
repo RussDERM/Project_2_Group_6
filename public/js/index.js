@@ -66,11 +66,11 @@ var handleFormSubmit = function(event) {
   event.preventDefault();
 
   var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
+    tweetId: $exampleText.val().trim(),
+    // description: $exampleDescription.val().trim()
   };
 
-  if (!(example.text && example.description)) {
+  if (!example.tweetId) {
     alert("You must enter an example text and description!");
     return;
   }
