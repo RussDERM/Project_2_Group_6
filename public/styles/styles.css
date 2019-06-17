@@ -6,6 +6,15 @@ body {
 
 }
 
+.lobster {
+  font-family: 'Lobster', cursive;
+
+}
+
+.quicksand {
+    font-family: 'Quicksand', sans-serif;
+
+}
 
 .navbar-brand {
   font-family: 'Lobster', cursive;
@@ -38,6 +47,17 @@ body {
 
 }
 
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+
 #search-bar {
   width: 100px;
   /* transform: translate(-50%,-50%); */
@@ -49,5 +69,19 @@ body {
 
 #logout {
   margin-left: 10px;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+/* Specific to Login page */
+
+#login-jumbo {
+  height: 50%;
 }
 
