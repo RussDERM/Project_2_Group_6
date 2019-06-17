@@ -1,34 +1,84 @@
+<nav id="nav" class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">TweetStache <i class="icon-twitter"></i></a>
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+
+      <form class="form-inline my-2 my-lg-0">
+        <input id="search-bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button id="submit" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        <div class="pull-right">
+          <ul class="nav navbar-nav">
+            <li class=" nav-item">
+              <a href="/logout" id="logout" class="nav-item btn btn-outline-secondary" role="button">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </form>
+
+
+      </div>
+</nav>
+
+
 <div id="home">
+
+
   <div class="container">
     <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Your Tweets:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each tweets}}
-          <li data-id="{{this.dataValues.id}}" class="list-group-item">
-            <a href="tweet/{{this.dataValues.id}}">{{this.dataValues.tweetId}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+      <ul>
+        {{#each tweet}}
+        <div class="tweet" id="{{this.tweet_id}}"></div>
+        {{/each}}
+      </ul>
     </div>
-    <a href="/logout">Logout</a>
   </div>
+
+  {{!-- <h3>Your Tweets:</h3>
+    <ul id="example-list" class="list-group">
+      {{#each tweets}}
+      <li data-id="{{this.dataValues.id}}" class="list-group-item">
+        <a href="tweet/{{this.dataValues.id}}">{{this.dataValues.tweetId}}</a>
+        <button class="btn btn-danger float-right delete">ｘ</button>
+      </li>
+      {{/each}}
+    </ul>
+  </div> --}}
 </div>
 
+
+
+
+
+</div>
+</div>
+
+<script sync src="https://platform.twitter.com/widgets.js"></script>
+
+<script>
+
+  var tweets = jQuery(".tweet");
+
+  jQuery(tweets).each(function (t, tweet) {
+
+    var id = jQuery(this).attr('id');
+
+    twttr.widgets.createTweet(
+      id, tweet,
+      {
+        // none or all
+        conversation: 'none',
+        // hidden or visible 
+        cards: 'visible',
+        // default is #cc0000
+        linkColor: '#cc0000',
+        // light or dark
+        theme: 'light'
+      });
+
+  });
+
+</script>
+
+{{!-- 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/index.js"></script> --}}

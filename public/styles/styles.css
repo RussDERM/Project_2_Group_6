@@ -1,3 +1,87 @@
 .list-group-item {
   line-height: 2.5;
 }
+body {
+  font-family: 'Quicksand', sans-serif;
+
+}
+
+.lobster {
+  font-family: 'Lobster', cursive;
+
+}
+
+.quicksand {
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.navbar-brand {
+  font-family: 'Lobster', cursive;
+}
+
+.jumbotron {
+  text-align: center;
+}
+
+.tweet {
+    display: inline-flex;
+    flex-wrap:  wrap;
+    height: 750px;
+    margin: 5px;
+    /* height: 600px; */
+}
+
+#tweet {
+  width: 400px !important;
+}
+
+#tweet iframe {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.twt-column {
+  margin-left: 2px;
+  margin-right: 2px;
+
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+
+#search-bar {
+  width: 100px;
+  /* transform: translate(-50%,-50%); */
+}
+#search-bar:focus {
+  width: 250px;
+  transition: ease-in-out, width .25s ease-in-out;
+}
+
+#logout {
+  margin-left: 10px;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+/* Specific to Login page */
+
+#login-jumbo {
+  height: 50%;
+}
+
