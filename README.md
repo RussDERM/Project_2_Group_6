@@ -44,5 +44,9 @@
 ## ScreenShot of App
   # TweetStache Login Page
 ![Login page](images/login.PNG)
-  # TweetStache Main Page
+  # Main Page
 ![Main Page](images/main.PNG)
+  # API Call
+![API Call](images/search.PNG)
+  # Database
+![Database](images/database.PNG)
