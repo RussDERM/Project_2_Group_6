@@ -6,9 +6,6 @@ body {
 
 }
 
-#nav {
-  background-color: green;
-}
 
 .navbar-brand {
   font-family: 'Lobster', cursive;
@@ -49,3 +46,8 @@ body {
   width: 250px;
   transition: ease-in-out, width .25s ease-in-out;
 }
+
+#logout {
+  margin-left: 10px;
+}
+
