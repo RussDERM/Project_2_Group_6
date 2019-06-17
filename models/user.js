@@ -1,12 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-
-    username: {
+    displayName: {
       type: DataTypes.STRING,
       notEmpty: true
     },
@@ -19,7 +13,6 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = function(models) {
     User.hasMany(models.Tweet, {
-      // foreignKey: "UserId",
       onDelete: "CASCADE"
     });
   };

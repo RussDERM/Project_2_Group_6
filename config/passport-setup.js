@@ -1,56 +1,39 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
-const keys = require("./keys_google");
-const User = require("../models").User;
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+var db = require("../models");
+var keys = require("./keys_google");
 
-//serialize user cookie set up
-passport.serializeUser((user,done) =>{
-    //use the user id created in sequelize table to display if user is already logged in 
-    //stores this user in a cookie
-    done(null, user.id)
-});
+// Use the GoogleStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Google
+//   profile), and invoke a callback with a user object.
+module.exports = function (passport) {
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
 
-//deserialize take in an id to retrieve from cookie and see what user the id belongs to
-passport.deserializeUser((id,done) =>{
-    User.findById(id).then((user) =>{
-        done(null, user.id);
-    }); 
-   
-});
-console.log(User);
-//set up passport to use a google strategy
-passport.use(new GoogleStrategy({
-    //options for the google strategy
-
-    //callback URL added for the passport redirect after authenticating client
-    callbackURL: "/auth/google/redirect",
-    clientID: keys.google.clientID,
-    clientSecret: keys.google.clientSecret
-}, (request, accessToken, refreshToken, profile, done) => {
-    // passport callback function goes here 
-    //console.log("Passport callback function fired");
-    //console.log(profile);
-
-    //check if the user already exists in our database to prevent duplicate accounts in db
-    User.findOne({ gooogleId: profile.id }).then((currentUser) => {
-        if (currentUser) {
-            //already have a user inside user collection with matching profile id returned from google
-            console.log("user is", currentUser);
-            done(null, currentUser);
-        } else {
-            // if not, create user in our db
-
-            //create new user
-            new User({
-                username: profile.displayName,
-                googleId: profile.id
-            }).save().then((newUser) => {
-                console.log("new user created", newUser);
-                done(null, newUser);
-                
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: keys.google.clientID,
+        clientSecret: keys.google.clientSecret,
+        callbackURL: "/auth/google/callback" // Needs to be changed with final hosted url for production
+      },
+      function (accessToken, refreshToken, profile, done) {
+        // Create user in User table. Add other columns as needed.
+        db.User.findOrCreate({ where: { googleId: profile.id }, defaults: { displayName: profile.displayName } })
+          .then(function (user) {
+              console.log(user);
+            console.log("===== FOUND THE USER IN OUR DB! =======");
+            console.log("User id: " + user[0].id); // this is the user id (as it is found in our db)
+            return done(null, {
+              id: user[0].id,
+              token: accessToken
             });
-        };
-    });
-
-
-}));
+          });
+      }
+    )
+  );
+};

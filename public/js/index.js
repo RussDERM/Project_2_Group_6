@@ -36,7 +36,7 @@ var refreshExamples = function() {
     console.log(data);
     var $tweets = data.map(function(tweet) {
       var $a = $("<a>")
-        .text(tweet.text)
+        .text(tweet.tweetId)
         .attr("href", "/tweet/" + tweet.id);
 
       var $li = $("<li>")
@@ -65,17 +65,17 @@ var refreshExamples = function() {
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
-    tweetId: $exampleText.val().trim(),
+  var tweet = {
+    tweetId: $exampleText.val().trim()
     // description: $exampleDescription.val().trim()
   };
 
-  if (!example.tweetId) {
+  if (!tweet.tweetId) {
     alert("You must enter an example text and description!");
     return;
   }
 
-  API.saveExample(example).then(function() {
+  API.saveExample(tweet).then(function() {
     refreshExamples();
   });
 

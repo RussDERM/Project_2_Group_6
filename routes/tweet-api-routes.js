@@ -1,73 +1,98 @@
-// Requiring our models
+// // Requiring our models
+// var db = require("../models");
+// var db = require("../models"); //you will need this in order to do db lookups
+
+// module.exports = function(app) {
+//   app.get("/api/tweets/", function(req, res) {
+//     //this api route just shows all tweets in the db
+//     db.Tweet.findAll({})
+//       .then(function(tweets) {
+//         res.json(tweets);
+//       })
+//       .catch(function(err) {
+//         res.json(err);
+//       });
+//   });
+
+//   //this is the create route that will make a tweet and ensure the right user's info is in there
+//   app.post("/api/tweets/", function(req, res) {
+//     console.log(req.body);
+
+//     db.Tweet.create({
+//       tweetId: req.body.tweetId,
+//       UserId: req.body.UserId //NOTE: because sequelize did the autocapitalize thing, the key on this object must be UserId
+//     })
+//       .then(function(result) {
+//         res.json(result);
+//       })
+//       .catch(function(err) {
+//         res.json(err);
+//       });
+//   });
+
+//   //AN EXAMPLE PROTECTED API ROUTE
+//   app.get("/api/users/:id", function(req, res) {
+//     //We only want users to retrieve data if they are logged in
+
+//     //first, see if anyone is logged in, period
+//     if (req.session.token) {
+//       console.log("=== CALLING API TO FIND ONE USER === ");
+//       //next, see if the person logged in matches the id in the params
+//       if (parseInt(req.session.userid) === parseInt(req.params.id)) {
+//         db.User.findOne({
+//           where: {
+//             id: req.session.userid
+//           }
+//         })
+//           .then(function(user) {
+//             res.json(user);
+//           })
+//           .catch(function(err) {
+//             res.sendStatus(500);
+//           });
+//       } else {
+//         res.sendStatus(400); //whoops!  this was a bad request
+//       }
+//     } else {
+//       //otherwise, tell the visitor they can't retrieve data (not logged in)
+//       res.sendStatus(403);
+//     }
+//   });
+// };
+
 var db = require("../models");
 
-// Routes
-// =============================================================
 module.exports = function(app) {
-  // GET route for getting all of the posts for the user
+  // Get all examples (by a certain user)
   app.get("/api/tweets", function(req, res) {
-    db.Tweet.findAll({ include: [db.User] }).then(function(dbTweets) {
+    console.log("======== CURRENT STATE OF THE SESSION ==========");
+    console.log(req.session);
+    db.Tweet.findAll({ where: { UserId: req.session.userid }}).then(function(dbTweets) {
       res.json(dbTweets);
     });
   });
 
-  // Save a new tweet
+  // Create a new example -- authored by a specific logged-in user
   app.post("/api/tweets", function(req, res) {
-    db.Tweet.create(req.body, { include: [db.User] }).then(function(dbTweet) {
-      res.json(dbTweet);
-    });
-  });
+    if(!req.session.token) { //if you aren't logged in, you can't post things :)
+      return res.sendStatus(403);
+    }
 
-  // app.get("/api/tweets", function(req, res) {
-  //   var query = {};
-  //   if (req.query.author_id) {
-  //     query.AuthorId = req.query.author_id;
-  //   }
-  //   // Here we add an "include" property to our options in our findAll query
-  //   // We set the value to an array of the models we want to include in a left outer join
-  //   // In this case, just db.User
-  //   db.Tweet.findAll({
-  //     where: query,
-  //     include: [db.User]
-  //   }).then(function(dbTweet) {
-  //     res.json(dbTweet);
-  //   });
-  // });
-
-  // Get route for retrieving a single post
-  // app.get("/api/tweets/:id", function(req, res) {
-  //   // Here we add an "include" property to our options in our findOne query
-  //   // We set the value to an array of the models we want to include in a left outer join
-  //   // In this case, just db.User
-  //   db.Tweet.findOne({
-  //     where: {
-  //       id: req.params.id
-  //     },
-  //     include: [db.User]
-  //   }).then(function(dbTweet) {
-  //     res.json(dbTweet);
-  //   });
-  // });
-
-  // DELETE route for deleting posts
-  app.delete("/api/tweets/:id", function(req, res) {
-    db.Tweet.destroy({
-      where: {
-        id: req.params.id
-      }
+    db.Tweet.create({
+      tweetId: req.body.tweetId,
+      // description: req.body.description,
+      UserId: req.session.userid
     }).then(function(dbTweet) {
       res.json(dbTweet);
     });
   });
 
-  // PUT route for updating posts
-  // app.put("/api/tweets", function(req, res) {
-  //   db.Tweet.update(req.body, {
-  //     // where: {
-  //     //   id: req.body.id
-  //     // }
-  //   }).then(function(dbTweet) {
-  //     res.json(dbTweet);
-  //   });
-  // });
+  // Delete an example by id
+  app.delete("/api/tweets/:id", function(req, res) {
+    db.Tweet.destroy({ where: { id: req.params.id } }).then(function(
+      dbExample
+    ) {
+      res.json(dbExample);
+    });
+  });
 };
